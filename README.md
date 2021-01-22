@@ -1,24 +1,39 @@
-# qiankun-base-1
+# 一个基于vue2.x基座搭建的qiankun微前端demo
+ - 主应用vue2.x
+ - 子应用分别为vue和react
 
-## Project setup
-```
-yarn install
-```
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
 
-### Compiles and minifies for production
-```
-yarn build
+## 下载命令
+
+```javascript
+git clone https://github.com/jackywq/qiankun-base.git
 ```
 
-### Lints and fixes files
+
+
+## 启动
+
+### qiankun-base基座应用
 ```
-yarn lint
+npm install
+npm run serve
+```
+<span style="color:red">【注意】</span> 需要同时启动 **qiankun-react**  &  **qiankun-vue** 两个子应用才能实现预期效果
+
+#### qiankun-react子应用
+
+```
+npm install 
+npm run start
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+#### qiankun-vue子应用
+
+```
+npm install
+npm run serve
+```
+
+
+
