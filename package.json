@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "start-all": "npm run serve & npm run start-react & npm run start-vue",
+    "serve": "vue-cli-service --open serve",
+    "start-react": "cd ./qiankun-react && npm run start",
+    "start-vue": "cd ./qiankun-vue && npm run serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
