@@ -13,10 +13,10 @@ module.exports = merge(getBaseConfig(false), {
     overlay: true,
     disableHostCheck: true,
     port: 20000, // 端口
-    // headers: {
-    //   "Access-Control-Allow-Origin": "*",
-    //   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-    //   "Access-Control-Allow-Headers": "X-Requested-With, content-type",
-    // },
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type",
+    },
   },
 });
