@@ -17,7 +17,8 @@ git clone https://github.com/jackywq/qiankun-base.git
 ### qiankun-base基座应用
 ```
 npm install
-npm run serve
+// 同时启动主应用和两个子应用
+npm run start-all
 ```
 <span style="color:red">【注意】</span> 需要同时启动 **qiankun-react**  &  **qiankun-vue** 两个子应用才能实现预期效果
 
