@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start-all": "npm run serve & npm run start-react & npm run start-vue",
+    "start": "npm run serve & npm run start-react & npm run start-vue",
     "serve": "vue-cli-service --open serve",
     "start-react": "cd ./qiankun-react && npm run start-no-open",
     "start-vue": "cd ./qiankun-vue && npm run serve",
@@ -11,6 +11,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "ant-design-vue": "^1.7.8",
     "core-js": "^3.8.3",
     "element-ui": "^2.15.0",
     "qiankun": "^2.3.6",

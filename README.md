@@ -1,40 +1,116 @@
-# 一个基于vue2.x基座搭建的qiankun微前端demo
- - 主应用vue2.x
- - 子应用分别为vue和react
+# 一个基于 Vue 2 基座的 qiankun 微前端 Demo
 
+- 主应用：Vue 2.x（`qiankun-base`）
+- 子应用：Vue 2.x（`qiankun-vue`）和 React 16（`qiankun-react`）
 
+## 运行环境要求（含 Node 版本）
 
-## 下载命令
+- Node.js：推荐使用 `v16.x LTS`（最低 `v14.17.0`）
+- 包管理器：建议 `npm >= 7`（或 `yarn`）
+- 系统：macOS / Linux，Windows 也可运行但并发命令可能不同
 
-```javascript
+检查当前版本：
+
+```
+node -v
+npm -v
+```
+
+使用 nvm 切换到推荐版本（可选）：
+
+```
+nvm install 16
+nvm use 16
+nvm alias default 16
+```
+
+## 仓库克隆
+
+```
 git clone https://github.com/jackywq/qiankun-base.git
 ```
 
+## 安装与启动
 
+首次运行请在三个项目内分别安装依赖：
 
-## 启动
-
-### qiankun-base基座应用
 ```
+# 基座（root）
 npm install
-// 同时启动主应用和两个子应用
-npm run start-all
-```
-<span style="color:red">【注意】</span> 需要同时启动 **qiankun-react**  &  **qiankun-vue** 两个子应用才能实现预期效果
 
-#### qiankun-react子应用
+# React 子应用
+cd qiankun-react && npm install
+
+# Vue 子应用
+cd ../qiankun-vue && npm install
+```
+
+然后可以一次性启动三个应用：
 
 ```
-npm install 
+# 在仓库根目录执行
 npm run start
 ```
 
-#### qiankun-vue子应用
+也可以分别启动：
 
 ```
-npm install
+# 基座（默认端口 8080）
+npm run serve
+
+# React 子应用（端口 20000）
+cd qiankun-react
+npm run start
+
+# Vue 子应用（端口 10000）
+cd qiankun-vue
 npm run serve
 ```
 
+访问地址与路由：
 
+- 基座首页：`http://localhost:8080/`
+- 挂载 Vue 子应用：`http://localhost:8080/vue`
+- 挂载 React 子应用：`http://localhost:8080/react`
 
+（子应用本地服务分别为 `http://localhost:10000` 与 `http://localhost:20000`，基座通过 qiankun 远程加载它们）
+
+## 构建产物
+
+```
+# 基座构建
+npm run build
+
+# React 子应用构建
+cd qiankun-react && npm run build
+
+# Vue 子应用构建
+cd qiankun-vue && npm run build
+```
+
+## 目录结构
+
+```
+qiankun-base
+├── qiankun-react/         # React 子应用（webpack 5）
+├── qiankun-vue/           # Vue 子应用（Vue CLI 4）
+└── src/                   # Vue 基座代码
+```
+
+## 关键配置说明
+
+- 端口：React 子应用 `20000`，Vue 子应用 `10000`，基座默认 `8080`
+- 跨域：两个子应用开发服务器均设置了 `Access-Control-Allow-Origin: *`
+- 激活规则：
+  - Vue 子应用：`activeRule: '/vue'`
+  - React 子应用：`activeRule: '/react'`
+
+对应注册见基座入口 `src/main.js`：
+
+```js
+registerMicroApps([
+  { name: 'vueApp', entry: '//localhost:10000', container: '#vue', activeRule: '/vue' },
+  { name: 'reactApp', entry: '//localhost:20000', container: '#react', activeRule: '/react' },
+])
+start()
+```
