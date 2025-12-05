@@ -8,19 +8,28 @@ import {
   BellOutlined,
 } from '@ant-design/icons';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import Home from './views/Home.jsx';
+import Home from './views/Home';
 import { registerMicroApps, start } from 'qiankun';
 import logoImage from './assets/logo.png';
+import './styles/ant-overrides.css';
 
 const { Header, Sider, Content } = Layout;
 
-export default function App() {
+type MicroApp = {
+  name: string;
+  entry: string;
+  container: string;
+  activeRule: string;
+  props?: unknown;
+};
+
+const App = () => {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    registerMicroApps([
+    const apps: MicroApp[] = [
       {
         name: 'vueApp',
         entry: '//localhost:10000',
@@ -34,7 +43,8 @@ export default function App() {
         container: '#react',
         activeRule: '/react',
       },
-    ]);
+    ];
+    registerMicroApps(apps as any);
     start();
   }, []);
 
@@ -51,8 +61,8 @@ export default function App() {
     { key: 'react', icon: <ExperimentOutlined />, label: 'React 应用' },
   ];
 
-  const onMenuClick = ({ key }) => {
-    const map = { home: '/', vue: '/vue', react: '/react' };
+  const onMenuClick = ({ key }: { key: string }) => {
+    const map: Record<string, string> = { home: '/', vue: '/vue', react: '/react' };
     const to = map[key] || '/';
     if (to !== location.pathname) navigate(to);
   };
@@ -71,7 +81,14 @@ export default function App() {
           <img src={logoImage} alt="" style={{width: 40, height: 40, marginRight: 8}} />
           {!collapsed && <span className="logo-text">盘古</span>}
         </div>
-        <Menu theme="dark" mode="inline" selectedKeys={[selectedKey]} items={menuItems} onClick={onMenuClick} />
+        <Menu
+          theme="dark"
+          mode="inline"
+          className="app-sider-menu"
+          selectedKeys={[selectedKey]}
+          items={menuItems}
+          onClick={onMenuClick}
+        />
       </Sider>
 
       <Layout>
@@ -104,3 +121,6 @@ export default function App() {
     </Layout>
   );
 }
+
+
+export default App;

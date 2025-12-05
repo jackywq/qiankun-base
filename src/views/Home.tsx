@@ -20,11 +20,12 @@ import { useNavigate } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 const { RangePicker } = DatePicker;
+type RankItem = { name: string; count: number };
 
-export default function Home() {
+const Home: React.FC = () => {
   const [dateType, setDateType] = useState('day');
   const navigate = useNavigate();
-  const ranking = [
+  const ranking: RankItem[] = [
     { name: '搜索关键词 A', count: 1920 },
     { name: '搜索关键词 B', count: 1560 },
     { name: '搜索关键词 C', count: 1320 },
@@ -51,7 +52,7 @@ export default function Home() {
 
       <Row gutter={16} style={{ marginTop: 16 }}>
         <Col span={6}>
-          <Card variant="filled">
+          <Card variant="borderless">
             <Text type="secondary">总销售额</Text>
             <div style={{ fontSize: 24, fontWeight: 600, marginTop: 8 }}>￥ 126,560</div>
             <div style={{ color: 'rgba(0,0,0,.45)' }}>较昨日 <CaretUpOutlined /> 12.3%</div>
@@ -60,7 +61,7 @@ export default function Home() {
           </Card>
         </Col>
         <Col span={6}>
-          <Card variant="filled">
+          <Card variant="borderless">
             <Text type="secondary">访问量</Text>
             <div style={{ fontSize: 24, fontWeight: 600, marginTop: 8 }}>8,846</div>
             <div style={{ color: 'rgba(0,0,0,.45)' }}>较昨日 <CaretDownOutlined /> 1.1%</div>
@@ -69,7 +70,7 @@ export default function Home() {
           </Card>
         </Col>
         <Col span={6}>
-          <Card variant="filled">
+          <Card variant="borderless">
             <Text type="secondary">支付笔数</Text>
             <div style={{ fontSize: 24, fontWeight: 600, marginTop: 8 }}>6,560</div>
             <div style={{ color: 'rgba(0,0,0,.45)' }}>转化率 32%</div>
@@ -78,7 +79,7 @@ export default function Home() {
           </Card>
         </Col>
         <Col span={6}>
-          <Card variant="filled">
+          <Card variant="borderless">
             <Text type="secondary">运营活动效果</Text>
             <Progress percent={78} status="active" />
             <Divider />
@@ -89,15 +90,15 @@ export default function Home() {
 
       <Row gutter={16} style={{ marginTop: 16 }}>
         <Col span={16}>
-          <Card title="访问量趋势" variant="filled">
+          <Card title="访问量趋势" variant="borderless">
             <div style={{ height: 240, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(0,0,0,.35)', background: 'repeating-linear-gradient(-45deg,#fafafa,#fafafa 10px,#f5f5f5 10px,#f5f5f5 20px)' }}>图表占位</div>
           </Card>
         </Col>
         <Col span={8}>
-          <Card title="热门搜索排行榜" variant="filled">
-            <List split={false}
+          <Card title="热门搜索排行榜" variant="borderless">
+            <List<RankItem> split={false}
               dataSource={ranking}
-              renderItem={(item, idx) => (
+              renderItem={(item: RankItem, idx: number) => (
                 <List.Item>
                   <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                     <span style={{ width: 24, color: 'rgba(0,0,0,.45)' }}>{idx + 1}</span>
@@ -113,7 +114,7 @@ export default function Home() {
 
       <Row gutter={16} style={{ marginTop: 16 }}>
         <Col span={12}>
-          <Card title="快速入口" variant="filled">
+          <Card title="快速入口" variant="borderless">
             <Space>
               <Button type="primary" onClick={() => navigate('/vue')}>进入 Vue 子应用</Button>
               <Button type="primary" onClick={() => navigate('/react')}>进入 React 子应用</Button>
@@ -122,7 +123,7 @@ export default function Home() {
           </Card>
         </Col>
         <Col span={12}>
-          <Card title="近期事件" variant="filled">
+          <Card title="近期事件" variant="borderless">
             <Timeline items={[
               { children: 'Vue 子应用部署成功' },
               { children: 'React 子应用发布 v0.1.0' },
@@ -132,7 +133,7 @@ export default function Home() {
         </Col>
       </Row>
 
-      <Card style={{ marginTop: 16 }} title="环境信息" variant="filled">
+      <Card style={{ marginTop: 16 }} title="环境信息" variant="borderless">
         <Descriptions column={3}>
           <Descriptions.Item label="基座框架">React 18</Descriptions.Item>
           <Descriptions.Item label="样式库">antd 5.x</Descriptions.Item>
@@ -146,3 +147,4 @@ export default function Home() {
   );
 }
 
+export default Home;
