@@ -4,12 +4,16 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 
-function render() {
+function render(props = {}) {
+  const { container } = props;
+  const root = container
+    ? container.querySelector("#root")
+    : document.getElementById("root");
   ReactDOM.render(
     <React.StrictMode>
       <App />
     </React.StrictMode>,
-    document.getElementById("root")
+    root
   );
 }
 
