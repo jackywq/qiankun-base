@@ -33,7 +33,6 @@ export async function bootstrap(props) {
 }
 
 export async function mount(props) {
-    console.log('mount :>> ', props);
     render(props);
 }
 

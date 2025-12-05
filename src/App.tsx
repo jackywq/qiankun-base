@@ -11,7 +11,7 @@ import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Home from './views/Home';
 import { registerMicroApps, start } from 'qiankun';
 import logoImage from './assets/logo.png';
-import './styles/ant-overrides.css';
+import './index.less';
 
 const { Header, Sider, Content } = Layout;
 
@@ -45,7 +45,12 @@ const App = () => {
       },
     ];
     registerMicroApps(apps as any);
-    start();
+    // 开启严格的样式隔离
+    start({
+      sandbox: {
+        strictStyleIsolation: true,
+      },
+    });
   }, []);
 
   const selectedKey = useMemo(() => {
@@ -75,16 +80,15 @@ const App = () => {
   };
 
   return (
-    <Layout id="app-layout" style={{ minHeight: '100vh' }}>
+    <Layout id="app-layout">
       <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
-        <div className="logo" style={{ height: 64, color: '#fff', fontWeight: 600, fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <img src={logoImage} alt="" style={{width: 40, height: 40, marginRight: 8}} />
+        <div className="logo">
+          <img src={logoImage} alt="" />
           {!collapsed && <span className="logo-text">盘古</span>}
         </div>
         <Menu
           theme="dark"
           mode="inline"
-          className="app-sider-menu"
           selectedKeys={[selectedKey]}
           items={menuItems}
           onClick={onMenuClick}
@@ -92,25 +96,25 @@ const App = () => {
       </Sider>
 
       <Layout>
-        <Header style={{ background: '#fff', padding: '0 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 2px 8px rgba(0,0,0,.06)' }}>
-          <div className="header-left" style={{ display: 'flex', alignItems: 'center' }}>
-            <Input.Search placeholder="搜索" style={{ width: 200 }} />
+        <Header className="app-header">
+          <div className="header-left">
+            <Input.Search className="search-input" placeholder="搜索" />
           </div>
-          <div className="header-right" style={{ display: 'flex', alignItems: 'center' }}>
-            <QuestionCircleOutlined style={{ fontSize: 16, marginRight: 16, color: 'rgba(0,0,0,.65)' }} />
+          <div className="header-right">
+            <QuestionCircleOutlined className="header-icon" />
             <Badge count={3}>
-              <BellOutlined style={{ fontSize: 16, marginRight: 16, color: 'rgba(0,0,0,.65)' }} />
+              <BellOutlined className="header-icon" />
             </Badge>
             <Dropdown menu={userMenu}>
-              <Space style={{ cursor: 'pointer' }}>
+              <Space className="user">
                 <Avatar size="small" style={{ background: '#87d068' }}>A</Avatar>
-                <span className="username" style={{ color: 'rgba(0,0,0,.85)' }}>Admin</span>
+                <span className="username">Admin</span>
               </Space>
             </Dropdown>
           </div>
         </Header>
 
-        <Content style={{ margin: 24, background: '#f0f2f5', padding: 24, minHeight: 360 }}>
+        <Content className="content">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/vue" element={<div id="vue" />} />
