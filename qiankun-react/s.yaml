@@ -1,0 +1,72 @@
+# ------------------------------------
+#   官方手册: https://manual.serverless-devs.com/user-guide/aliyun/#fc3
+#   有问题快来钉钉群问一下吧：33947367
+# ------------------------------------
+
+edition: 3.0.0
+name: pangu-react
+access: "default"
+vars:
+  region: "cn-shanghai"
+  functionName: "wq-pangu-react"
+resources:
+  start_nginx:
+    component: fc3
+    actions:
+      pre-deploy:
+        - run: npm run build
+          path: ./
+        - run: cp nginx.conf ./dist/nginx.conf
+          path: ./
+    props:
+      region: ${vars.region}
+      description: Serverless Devs Web Framework Function
+      runtime: custom.debian10
+      layers:
+        - acs:fc:${vars.region}:official:layers/Nginx/versions/1
+      timeout: 60
+      cpu: 1
+      memorySize: 2048
+      diskSize: 10240
+      instanceConcurrency: 100
+      customRuntimeConfig:
+        command:
+          - "/opt/bin/nginx"
+          - "-c"
+          - "/code/nginx.conf"
+          - "-g"
+          - "daemon off;"
+        port: 9000
+      functionName: ${vars.functionName}
+      code: ./dist
+      triggers:
+        - triggerName: httpTrigger
+          triggerType: http
+          triggerConfig:
+            methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            authType: anonymous
+  fc3_domain_0:
+    component: fc3-domain
+    props:
+      region: ${vars.region}
+      domainName: pangu.zerocmf.com
+      protocol: HTTP
+      routeConfig:
+        routes:
+          - path: /react/*
+            functionName: wq-pangu-react
+            qualifier: LATEST
+          - path: /vue/*
+            functionName: wq-pangu-vue
+            qualifier: LATEST
+          - path: /
+            functionName: wq-pangu
+            qualifier: LATEST
+      wafConfig:
+        enableWAF: false
+      authConfig:
+        authType: anonymous

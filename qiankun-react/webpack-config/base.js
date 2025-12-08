@@ -26,9 +26,9 @@ module.exports = (isProductionMode) => ({
     path: resolve("./dist"), // 打包后的文件存放的地方
     library: "reactApp",
     libraryTarget: "umd",
-    filename: "js/[name].[chunkhash:8].js",
-    chunkFilename: "js/[name].[chunkhash:8].js",
-    publicPath: "/",
+    filename: "react/js/[name].[chunkhash:8].js",
+    chunkFilename: "react/js/[name].[chunkhash:8].js",
+    publicPath: "/"
   },
   module: {
     rules: [
@@ -103,7 +103,7 @@ module.exports = (isProductionMode) => ({
     }),
     new HtmlWebpackPlugin({
       // 根据模板插入css/js等生成最终HTML
-      filename: "./index.html", // 生成的html存放路径，相对于 path
+      filename: "./react/index.html", // 生成的html存放路径，相对于 path
       template: "./public/index.html", // html模板路径
       hash: true, // 为静态资源生成hash值
       minify: false,

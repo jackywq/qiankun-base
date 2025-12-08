@@ -2,11 +2,17 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { merge } = require("webpack-merge");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
 const getBaseConfig = require("./base");
+const path = require('path');
 
 module.exports = merge(getBaseConfig(false), {
   mode: "production",
   devtool: "source-map",
   plugins: [new CleanWebpackPlugin()],
+  output: {
+    // path: path.resolve(__dirname, '..', 'dist'),
+    // 设置公共路径为二级目录 /react/
+    // publicPath: "/react/",
+  },
   optimization: {
     runtimeChunk: "single", // 为所有 entry 创建一个共享的 runtime
     minimizer: [

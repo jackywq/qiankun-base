@@ -11,7 +11,7 @@ const { Header, Content } = Layout;
 
 export default function App() {
   // 在基座中运行时，设置 basename 为 /react；独立运行则为空
-  const basename = window.__POWERED_BY_QIANKUN__ ? "/react" : "/";
+  const basename = "/react";
   return (
     <Router basename={basename}>
       <Layout style={{ background: "transparent" }}>

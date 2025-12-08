@@ -29,17 +29,20 @@ const App = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const isProd = import.meta.env.PROD;
+    const vueEntry = isProd ? '/vue/' : '//localhost:10000';
+    const reactEntry = isProd ? '/react/' : '//localhost:20000';
     const apps: MicroApp[] = [
       {
         name: 'vueApp',
-        entry: '//localhost:10000',
+        entry: vueEntry,
         container: '#vue',
         activeRule: '/vue',
         props: { a: 1 },
       },
       {
         name: 'reactApp',
-        entry: '//localhost:20000',
+        entry: reactEntry,
         container: '#react',
         activeRule: '/react',
       },
