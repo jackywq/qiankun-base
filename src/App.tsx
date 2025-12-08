@@ -30,8 +30,8 @@ const App = () => {
 
   useEffect(() => {
     const isProd = import.meta.env.PROD;
-    const vueEntry = isProd ? '/vue/' : '//localhost:10000';
-    const reactEntry = isProd ? '/react/' : '//localhost:20000';
+    const vueEntry = isProd ? 'http://pangu-sub.zerocmf.com/vue/' : '//localhost:10000';
+    const reactEntry = isProd ? 'http://pangu-sub.zerocmf.com/react/' : '//localhost:20000';
     const apps: MicroApp[] = [
       {
         name: 'vueApp',

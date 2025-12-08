@@ -53,8 +53,8 @@ resources:
     component: fc3-domain
     props:
       region: ${vars.region}
-      domainName: pangu.zerocmf.com
-      protocol: HTTP
+      domainName: pangu-sub.zerocmf.com
+      protocol: HTTP\
       routeConfig:
         routes:
           - path: /react/*
@@ -62,9 +62,6 @@ resources:
             qualifier: LATEST
           - path: /vue/*
             functionName: wq-pangu-vue
-            qualifier: LATEST
-          - path: /
-            functionName: wq-pangu
             qualifier: LATEST
       wafConfig:
         enableWAF: false
