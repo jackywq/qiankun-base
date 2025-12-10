@@ -28,7 +28,7 @@ module.exports = (isProductionMode) => ({
     libraryTarget: "umd",
     filename: "react/js/[name].[chunkhash:8].js",
     chunkFilename: "react/js/[name].[chunkhash:8].js",
-    publicPath: "/"
+    publicPath: "/",
   },
   module: {
     rules: [

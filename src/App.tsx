@@ -120,8 +120,8 @@ const App = () => {
         <Content className="content">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/vue" element={<div id="vue" />} />
-            <Route path="/react" element={<div id="react" />} />
+            <Route path="/vue/*" element={<div id="vue" />} />
+            <Route path="/react/*" element={<div id="react" />} />
           </Routes>
         </Content>
       </Layout>

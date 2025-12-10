@@ -7,7 +7,14 @@ module.exports = merge(getBaseConfig(false), {
   plugins: [],
   devServer: {
     contentBase: "dist",
-    historyApiFallback: true,
+    historyApiFallback: {
+      rewrites: [
+        // 根路径重定向到/react，同时兼容路由刷新404
+        { from: /^\/$/, to: "/react/" },
+        // 其他路径重定向到/react，同时兼容路由刷新404
+        { from: /^\/react\/.*$/, to: "/react/index.html" },
+      ],
+    },
     inline: true,
     open: false,
     overlay: true,
