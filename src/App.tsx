@@ -32,6 +32,7 @@ const App = () => {
     const isProd = import.meta.env.PROD;
     const vueEntry = isProd ? 'http://pangu-sub.zerocmf.com/vue/' : '//localhost:10000';
     const reactEntry = isProd ? 'http://pangu-sub.zerocmf.com/react/' : '//localhost:20000';
+    const yugongEntry = 'https://www.yugongsoft.com/';
     const apps: MicroApp[] = [
       {
         name: 'vueApp',
@@ -46,6 +47,7 @@ const App = () => {
         container: '#react',
         activeRule: '/react',
       },
+      {        name: 'yugongsoft',entry: yugongEntry,        container: '#yugong',        activeRule: '/yugong',      },
     ];
     registerMicroApps(apps as any);
     // 开启严格的样式隔离
@@ -60,6 +62,7 @@ const App = () => {
     const path = location.pathname || '/';
     if (path.startsWith('/vue')) return 'vue';
     if (path.startsWith('/react')) return 'react';
+    if (path.startsWith('/yugong')) return 'yugong';
     return 'home';
   }, [location.pathname]);
 
@@ -67,10 +70,11 @@ const App = () => {
     { key: 'home', icon: <DashboardOutlined />, label: '分析页' },
     { key: 'vue', icon: <AppstoreOutlined />, label: 'Vue 应用' },
     { key: 'react', icon: <ExperimentOutlined />, label: 'React 应用' },
+    { key: 'yugong', icon: <ExperimentOutlined />, label: '愚公软件' },
   ];
 
   const onMenuClick = ({ key }: { key: string }) => {
-    const map: Record<string, string> = { home: '/', vue: '/vue', react: '/react' };
+    const map: Record<string, string> = { home: '/', vue: '/vue', react: '/react', yugong: '/yugong' };
     const to = map[key] || '/';
     if (to !== location.pathname) navigate(to);
   };
@@ -122,6 +126,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/vue/*" element={<div id="vue" />} />
             <Route path="/react/*" element={<div id="react" />} />
+            <Route path="/yugong/*" element={<div id="yugong" />} />
           </Routes>
         </Content>
       </Layout>
