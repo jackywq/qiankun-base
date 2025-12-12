@@ -1,19 +1,12 @@
-import React, { useMemo, useState, useEffect } from 'react';
-import { Layout, Menu, Avatar, Badge, Dropdown, Input, Space } from 'antd';
-import {
-  DashboardOutlined,
-  AppstoreOutlined,
-  ExperimentOutlined,
-  QuestionCircleOutlined,
-  BellOutlined,
-} from '@ant-design/icons';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import Home from './views/Home';
-import { registerMicroApps, start } from 'qiankun';
-import logoImage from './assets/logo.png';
-import './index.less';
+import { useEffect } from "react";
+import { Layout } from "antd";
+import { registerMicroApps, start } from "qiankun";
+import RouterConfig from "./router";
+import SiderMenu from "./components/SiderMenu";
+import HeaderMenu from "./components/HeaderMenu";
+import "./index.less";
 
-const { Header, Sider, Content } = Layout;
+const { Content } = Layout;
 
 type MicroApp = {
   name: string;
@@ -24,27 +17,27 @@ type MicroApp = {
 };
 
 const App = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
-
   useEffect(() => {
     const isProd = import.meta.env.PROD;
-    const vueEntry = isProd ? 'http://pangu-sub.zerocmf.com/vue/' : '//localhost:10000';
-    const reactEntry = isProd ? 'http://pangu-sub.zerocmf.com/react/' : '//localhost:20000';
+    const vueEntry = isProd
+      ? "http://pangu-sub.zerocmf.com/vue/"
+      : "//localhost:10000";
+    const reactEntry = isProd
+      ? "http://pangu-sub.zerocmf.com/react/"
+      : "//localhost:20000";
     const apps: MicroApp[] = [
       {
-        name: 'vueApp',
+        name: "vueApp",
         entry: vueEntry,
-        container: '#vue',
-        activeRule: '/vue',
+        container: "#vue",
+        activeRule: "/vue",
         props: { a: 1 },
       },
       {
-        name: 'reactApp',
+        name: "reactApp",
         entry: reactEntry,
-        container: '#react',
-        activeRule: '/react',
+        container: "#react",
+        activeRule: "/react",
       },
     ];
     registerMicroApps(apps as any);
@@ -56,79 +49,19 @@ const App = () => {
     });
   }, []);
 
-  const selectedKey = useMemo(() => {
-    const path = location.pathname || '/';
-    if (path.startsWith('/vue')) return 'vue';
-    if (path.startsWith('/react')) return 'react';
-    if (path.startsWith('/yugong')) return 'yugong';
-    return 'home';
-  }, [location.pathname]);
-
-  const menuItems = [
-    { key: 'home', icon: <DashboardOutlined />, label: '分析页' },
-    { key: 'vue', icon: <AppstoreOutlined />, label: 'Vue 应用' },
-    { key: 'react', icon: <ExperimentOutlined />, label: 'React 应用' },
-  ];
-
-  const onMenuClick = ({ key }: { key: string }) => {
-    const map: Record<string, string> = { home: '/', vue: '/vue', react: '/react', yugong: '/yugong' };
-    const to = map[key] || '/';
-    if (to !== location.pathname) navigate(to);
-  };
-
-  const userMenu = {
-    items: [
-      { key: 'profile', label: '个人中心' },
-      { key: 'logout', label: '退出登录' },
-    ],
-  };
-
   return (
     <Layout id="app-layout">
-      <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
-        <div className="logo">
-          <img src={logoImage} alt="" />
-          {!collapsed && <span className="logo-text">盘古</span>}
-        </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          selectedKeys={[selectedKey]}
-          items={menuItems}
-          onClick={onMenuClick}
-        />
-      </Sider>
+      <SiderMenu />
 
       <Layout>
-        <Header className="app-header">
-          <div className="header-left">
-            <Input.Search className="search-input" placeholder="搜索" />
-          </div>
-          <div className="header-right">
-            <QuestionCircleOutlined className="header-icon" />
-            <Badge count={3}>
-              <BellOutlined className="header-icon" />
-            </Badge>
-            <Dropdown menu={userMenu}>
-              <Space className="user">
-                <Avatar size="small" style={{ background: '#87d068' }}>A</Avatar>
-                <span className="username">Admin</span>
-              </Space>
-            </Dropdown>
-          </div>
-        </Header>
+        <HeaderMenu />
 
         <Content className="content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/vue/*" element={<div id="vue" />} />
-            <Route path="/react/*" element={<div id="react" />} />
-          </Routes>
+          <RouterConfig />
         </Content>
       </Layout>
     </Layout>
   );
-}
-
+};
 
 export default App;
